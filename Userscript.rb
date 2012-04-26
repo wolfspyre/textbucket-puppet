@@ -22,7 +22,7 @@ usergroups      = wrapquotes "M#Addtl Groups=[optional] The groups to which the 
 userhome        = wrapquotes "M#Homedir=[optional] The home directory of the user#"
 usermanagehome  = wrapquotes "M#Manage Home=[optional] True or false#"
 usershell       = wrapquotes "M#Shell=[optional] The user's login shell#"
-usersystem      = wrapquotes "M#System Account=[optional] True or false#"
+usersystem      = wrapquotes "M#System=[optional] Is this a system acct? True or false#"
 userpassword    = wrapquotes "M#Password=[optional]#"
 userpassmaxage  = wrapquotes "M#Pass Max age=[optional]#"
 userpassminage  = wrapquotes "M#Pass Min age=[optional]#"
@@ -61,44 +61,44 @@ unless "M#Username#" =~ /\[Required\]/
 end
 case "M#Ensure#"
   when /^absent$/i
-    puts "  ensure        => 'absent',"
+    puts "  ensure            => 'absent',"
   when /^present$/i
-    puts "  ensure        => 'present',"
+    puts "  ensure            => 'present',"
   when /^role$/i
-    puts "  ensure        => 'role',"
+    puts "  ensure            => 'role',"
 end
 unless "M#Comment#" =~ /\[optional\]/
-  puts "  comment        => "+usercomment+","
+  puts "  comment           => "+usercomment+","
 end
 unless "M#UID#" =~ /\[optional\]/
-  puts "  uid        => "+useruid+","
+  puts "  uid               => "+useruid+","
 end
 unless "M#GID#" =~ /\[optional\]/
-  puts "  gid        => "+usergid+","
+  puts "  gid               => "+usergid+","
 end
 unless "M#Addtl Groups#" =~ /\[optional\]/
   puts "  groups        => "+usergroups+","
 end
 unless "M#Homedir#" =~ /\[optional\]/
-  puts "  home        => "+userhome+","
+  puts "  home              => "+userhome+","
 end
 case "M#Manage Home#"
   when /^true$/i
-    puts "  managehome  => 'true',"
+    puts "  managehome          => 'true',"
   when /^false$/i
-    puts "  managehome  => 'false',"
+    puts "  managehome          => 'false',"
 end
 unless "M#Shell#" =~ /\[optional\]/
-  puts "  shell        => "+usershell+","
+  puts "  shell             => "+usershell+","
 end
-case "M#System Account#"
+case "M#System#"
   when /^true$/i
-    puts "  system  => 'true',"
+    puts "  system            => 'true',"
   when /^false$/i
-    puts "  system  => 'false',"
+    puts "  system            => 'false',"
 end
 unless "M#Password#" =~ /\[optional\]/
-  puts "  password        => "+userpassword+","
+  puts "  password          => "+userpassword+","
 end
 unless "M#Pass Max age#" =~ /\[optional\]/
   puts "  password_max_age  => "+userpassmaxage+","
@@ -107,13 +107,13 @@ unless "M#Pass Min age#" =~ /\[optional\]/
   puts "  password_min_age  => "+userpassminage+","
 end
 if "M#Expiry#" =~ /\d\d\d\d-\d\d-\d\d/
-  puts "  expiry        => "+userexpiry+","
+  puts "  expiry            => "+userexpiry+","
 end
 case "M#Allow Duplicates#"
   when /^true$/i
-    puts "  allowdupe  => 'true',"
+    puts "  allowdupe         => 'true',"
   when /^false$/i
-    puts "  allowdupe  => 'false',"
+    puts "  allowdupe         => 'false',"
 end
 case "M#Attr Membership#"
   when /^inclusive$/i
@@ -126,30 +126,30 @@ unless "M#Attributes#" =~ /\[optional\]/
 end
 case "M#Auth Membership#"
   when /^inclusive$/i
-    puts "  auth_membership  => 'inclusive',"
+    puts "  auth_membership   => 'inclusive',"
   when /^minimum$/i
-    puts "  auth_membership  => 'minimum',"
+    puts "  auth_membership   => 'minimum',"
 end
 unless "M#Auths#" =~ /\[optional\]/
-  puts "  auths        => "+userauth+","
+  puts "  auths             => "+userauth+","
 end
 unless "M#IA Load Mod#" =~ /\[optional\]/
-  puts "  ia_load_module  => "+useriaload+","
+  puts "  ia_load_module    => "+useriaload+","
 end
 case "M#Key Membership#"
   when /^inclusive$/i
-    puts "  key_membership  => 'inclusive',"
+    puts "  key_membership    => 'inclusive',"
   when /^minimum$/i
-    puts "  key_membership  => 'minimum',"
+    puts "  key_membership    => 'minimum',"
 end
 unless "M#Keys#" =~ /\[optional\]/
-  puts "  keys        => "+userkeys+","
+  puts "  keys              => "+userkeys+","
 end
 case "M#Membership#"
   when /^inclusive$/i
-    puts "  membership  => 'inclusive',"
+    puts "  membership        => 'inclusive',"
   when /^minimum$/i
-    puts "  membership  => 'minimum',"
+    puts "  membership        => 'minimum',"
 end
 case "M#Profile Membership#"
   when /^inclusive$/i
@@ -158,20 +158,20 @@ case "M#Profile Membership#"
     puts "  profile_membership  => 'minimum',"
 end
 unless "M#Profiles#" =~ /\[optional\]/
-  puts "  profiles  => "+userprofiles+","
+  puts "  profiles        => "+userprofiles+","
 end
 unless "M#Project#" =~ /\[optional\]/
-  puts "  project        => "+userproject+","
+  puts "  project           => "+userproject+","
 end
 
 case "M#Role Membership#"
   when /^inclusive$/i
-    puts "  role_membership  => 'inclusive',"
+    puts "  role_membership   => 'inclusive',"
   when /^minimum$/i
-    puts "  role_membership  => 'minimum',"
+    puts "  role_membership   => 'minimum',"
 end
 unless "M#Roles#" =~ /\[optional\]/
-  puts "  roles  => "+userroles+","
+  puts "  roles             => "+userroles+","
 end
 
 unless "M#Meta-alias#" =~ /\[optional metaparameter\]/
