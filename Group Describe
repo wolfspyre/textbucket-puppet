@@ -1,0 +1,55 @@
+group
+
+- **allowdupe**
+    Whether to allow duplicate GIDs. Defaults to `false`.  Valid values are
+    `true`, `false`.
+
+- **attribute_membership**
+    Whether specified attribute value pairs should be treated as the only
+    attributes
+    of the user or whether they should merely
+    be treated as the minimum list.  Valid values are `inclusive`,
+    `minimum`.
+
+- **attributes**
+    Specify group AIX attributes in an array of `key=value` pairs.  Requires
+    features manages_aix_lam.
+
+- **auth_membership**
+    whether the provider is authoritative for group membership.
+
+- **ensure**
+    Create or remove the group.  Valid values are `present`, `absent`.
+
+- **gid**
+    The group ID.  Must be specified numerically.  If no group ID is
+    specified when creating a new group, then one will be chosen
+    automatically according to local system standards. This will likely
+    result in the same group having different GIDs on different systems,
+    which is not recommended.
+    
+    On Windows, this property is read-only and will return the group's
+    security
+identifier (SID).
+
+- **ia_load_module**
+    The name of the I&A module to use to manage this user  Requires features
+    manages_aix_lam.
+
+- **members**
+    The members of the group. For directory services where group
+    membership is stored in the group objects, not the users.  Requires
+    features manages_members.
+
+- **name**
+    The group name. While naming limitations vary by operating system,
+    it is advisable to restrict names to the lowest common denominator,
+    which is a maximum of 8 characters beginning with a letter.
+    
+    Note that Puppet considers group names to be case-sensitive, regardless
+    of the platform's own rules; be sure to always use the same case when
+    referring to a given group.
+
+- **system**
+    Whether the group is a system group with lower GID.  Valid values are
+    `true`, `false`.

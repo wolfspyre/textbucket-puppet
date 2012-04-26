@@ -1,0 +1,126 @@
+package
+
+- **adminfile**
+    A file containing package defaults for installing packages.
+    This is currently only used on Solaris.  The value will be
+    validated according to system rules, which in the case of
+    Solaris means that it should either be a fully qualified path
+    or it should be in `/var/sadm/install/admin`.
+
+- **allowcdrom**
+    Tells apt to allow cdrom sources in the sources.list file.
+    Normally apt will bail if you try this.  Valid values are `true`,
+    `false`.
+
+- **category**
+    A read-only parameter set by the package.
+
+- **configfiles**
+    Whether configfiles should be kept or replaced.  Most packages
+    types do not support this parameter. Defaults to `keep`.  Valid values
+    are `keep`, `replace`.
+
+- **description**
+    A read-only parameter set by the package.
+
+- **ensure**
+    What state the package should be in. On packaging systems that can
+    retrieve new packages on their own, you can choose which package to
+    retrieve by specifying a version number or `latest` as the ensure
+    value. On packaging systems that manage configuration files separately
+    from "normal" system files, you can uninstall config files by
+    specifying `purged` as the ensure value.
+      Valid values are `present` (also called `installed`), `absent`,
+    `purged`, `held`, `latest`.  Values can match `/./`.
+
+- **flavor**
+    Newer versions of OpenBSD support 'flavors', which are
+    further specifications for which type of package you want.
+
+- **install_options**
+    A hash of additional options to pass when installing a package. These
+    options are package-specific, and should be documented by the software
+    vendor. The most commonly implemented option is `INSTALLDIR`:
+    
+        package { 'mysql':
+          ensure          => installed,
+          provider        => 'msi',
+          source          => 'N:/packages/mysql-5.5.16-winx64.msi',
+          install_options => { 'INSTALLDIR' => 'C:\mysql-5.5' },
+        }
+    
+    Since these options are passed verbatim to `msiexec`, any file paths
+    specified in `install_options` should use a backslash as the separator
+    character rather than a forward slash. This is the **only** place in
+    Puppet
+    where backslash separators should be used. Note that backslashes in
+    double-quoted strings _must_ be double-escaped and backslashes
+    in single-quoted strings _may_ be double-escaped.
+      Requires features install_options.
+
+- **instance**
+    A read-only parameter set by the package.
+
+- **name**
+    The package name.  This is the name that the packaging
+    system uses internally, which is sometimes (especially on Solaris)
+    a name that is basically useless to humans.  If you want to
+    abstract package installation, then you can use aliases to provide
+    a common name to packages:
+    
+        # In the 'openssl' class
+        $ssl = $operatingsystem ? {
+          solaris => SMCossl,
+          default => openssl
+        }
+    
+        # It is not an error to set an alias to the same value as the
+        # object name.
+        package { $ssl:
+          ensure => installed,
+          alias  => openssl
+        }
+    
+        . etc. .
+    
+        $ssh = $operatingsystem ? {
+          solaris => SMCossh,
+          default => openssh
+        }
+    
+        # Use the alias to specify a dependency, rather than
+        # having another selector to figure it out again.
+        package { $ssh:
+          ensure  => installed,
+          alias   => openssh,
+      require => Package[openssl]
+    }
+
+
+- **platform**
+    A read-only parameter set by the package.
+
+- **responsefile**
+    A file containing any necessary answers to questions asked by
+    the package.  This is currently used on Solaris and Debian.  The
+    value will be validated according to system rules, but it should
+    generally be a fully qualified path.
+
+- **root**
+    A read-only parameter set by the package.
+
+- **source**
+    Where to find the actual package.  This must be a local file
+    (or on a network file system) or a URL that your specific
+    packaging type understands; Puppet will not retrieve files for you,
+    although you can manage packages as `file` resources.
+
+- **status**
+    A read-only parameter set by the package.
+
+- **type**
+    Deprecated form of `provider`.
+
+- **vendor**
+    A read-only parameter set by the package.
+

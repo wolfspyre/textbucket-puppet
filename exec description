@@ -1,0 +1,149 @@
+exec description
+
+- **command** (*namevar*)
+    The actual command to execute.  Must either be fully qualified
+    or a search path for the command must be provided.  If the command
+    succeeds, any output produced will be logged at the instance's
+    normal log level (usually `notice`), but if the command fails
+    (meaning its return code does not match the specified code) then
+    any output is logged at the `err` log level.
+
+- **creates**
+    A file that this command creates.  If this
+    parameter is provided, then the command will only be run
+    if the specified file does not exist.
+    
+        exec { "tar -xf /Volumes/nfs02/important.tar":
+          cwd     => "/var/tmp",
+          creates => "/var/tmp/myfile",
+          path    => ["/usr/bin", "/usr/sbin"]
+        }
+    
+    In this example, if `/var/tmp/myfile` is ever deleted, the exec
+    will bring it back by re-extracting the tarball.
+
+- **cwd**
+    The directory from which to run the command.  If
+    this directory does not exist, the command will fail.
+
+- **environment**
+    Any additional environment variables you want to set for a
+    command.  Note that if you use this to set PATH, it will override
+    the `path` attribute.  Multiple environment variables should be
+    specified as an array.
+
+- **group**
+    The group to run the command as.  This seems to work quite
+    haphazardly on different platforms -- it is a platform issue
+    not a Ruby or Puppet one, since the same variety exists when
+    running commands as different users in the shell.
+
+- **logoutput**
+    Whether to log output.  Defaults to logging output at the
+    loglevel for the `exec` resource. Use *on_failure* to only
+    log the output when the command reports an error.  Values are
+    **true**, *false*, *on_failure*, and any legal log level.  Valid values
+    are `true`, `false`, `on_failure`.
+
+- **onlyif**
+    If this parameter is set, then this `exec` will only run if
+    the command returns 0.  For example:
+    
+        exec { "logrotate":
+          path   => "/usr/bin:/usr/sbin:/bin",
+          onlyif => "test `du /var/log/messages | cut -f1` -gt 100000"
+        }
+    
+    This would run `logrotate` only if that test returned true.
+    
+    Note that this command follows the same rules as the main command,
+    which is to say that it must be fully qualified if the path is not set.
+    
+    Also note that onlyif can take an array as its value, e.g.:
+    
+        onlyif => ["test -f /tmp/file1", "test -f /tmp/file2"]
+    
+    This will only run the exec if _all_ conditions in the array return
+    true.
+
+- **path**
+    The search path used for command execution.
+    Commands must be fully qualified if no path is specified.  Paths
+    can be specified as an array or as a ':' separated list.
+
+- **refresh**
+    How to refresh this command.  By default, the exec is just
+    called again when it receives an event from another resource,
+    but this parameter allows you to define a different command
+    for refreshing.
+
+- **refreshonly**
+    The command should only be run as a
+    refresh mechanism for when a dependent object is changed.  It only
+    makes sense to use this option when this command depends on some
+    other object; it is useful for triggering an action:
+    
+        # Pull down the main aliases file
+        file { "/etc/aliases":
+          source => "puppet://server/module/aliases"
+        }
+    
+        # Rebuild the database, but only when the file changes
+        exec { newaliases:
+          path        => ["/usr/bin", "/usr/sbin"],
+          subscribe   => File["/etc/aliases"],
+          refreshonly => true
+        }
+    
+    Note that only `subscribe` and `notify` can trigger actions, not
+    `require`,
+    so it only makes sense to use `refreshonly` with `subscribe` or
+    `notify`.
+  Valid values are `true`, `false`.
+
+- **returns**
+    The expected return code(s).  An error will be returned if the
+    executed command returns something else.  Defaults to 0. Can be
+    specified as an array of acceptable return codes or a single value.
+
+- **timeout**
+    The maximum time the command should take.  If the command takes
+    longer than the timeout, the command is considered to have failed
+    and will be stopped.  Use 0 to disable the timeout.
+    The time is specified in seconds.
+
+- **tries**
+    The number of times execution of the command should be tried.
+    Defaults to '1'. This many attempts will be made to execute
+    the command until an acceptable return code is returned.
+    Note that the timeout paramater applies to each try rather than
+    to the complete set of tries.
+
+- **try_sleep**
+    The time to sleep in seconds between 'tries'.
+
+- **unless**
+    If this parameter is set, then this `exec` will run unless
+    the command returns 0.  For example:
+    
+        exec { "/bin/echo root >> /usr/lib/cron/cron.allow":
+          path   => "/usr/bin:/usr/sbin:/bin",
+          unless => "grep root /usr/lib/cron/cron.allow 2>/dev/null"
+        }
+    
+    This would add `root` to the cron.allow file (on Solaris) unless
+    `grep` determines it's already there.
+    
+    Note that this command follows the same rules as the main command,
+    which is to say that it must be fully qualified if the path is not set.
+
+- **user**
+    The user to run the command as.  Note that if you
+    use this then any error output is not currently captured.  This
+    is because of a bug within Ruby.  If you are using Puppet to
+    create this user, the exec will automatically require the user,
+    as long as it is specified by name.
+
+Providers
+---------
+    posix, shell, windows
