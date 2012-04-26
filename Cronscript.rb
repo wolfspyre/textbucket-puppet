@@ -69,7 +69,7 @@ unless "M#Month Day#" =~ /\[optional\] 1-31/
   puts "  monthday     =>  "+cronmonthday+","
 end
 
-unless "M#Special#" =~ /\[optiona\]/
+unless "M#Special#" =~ /\[optional\]/
   puts "  special      =>  "+cronspecial+","
 end
 

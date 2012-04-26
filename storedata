@@ -1,0 +1,1837 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE database SYSTEM "file:///System/Library/DTDs/CoreData.dtd">
+
+<database>
+    <databaseInfo>
+        <version>134481920</version>
+        <UUID>3EE61140-3C27-47DB-82BB-53A2C2ECCF00</UUID>
+        <nextObjectID>132</nextObjectID>
+        <metadata>
+            <plist version="1.0">
+                <dict>
+                    <key>NSPersistenceFrameworkVersion</key>
+                    <integer>358</integer>
+                    <key>NSStoreModelVersionHashes</key>
+                    <dict>
+                        <key>Label</key>
+                        <data>
+		uq47jWjmuaRjg7C6KvLU12kaRC1HrcILVnEEH3XLWQ4=
+		</data>
+                        <key>OrderedItem</key>
+                        <data>
+		TZTV/PDJBI/4j48n4mnDCnjAK+LBHnKvI/La50nCj0U=
+		</data>
+                        <key>Script</key>
+                        <data>
+		xM78yVCg5hAnssVptlxJaskOnYRPbuhbBLg1z5IbMhc=
+		</data>
+                        <key>Slot</key>
+                        <data>
+		GYBjvm8vcOVZ7rhHQWHMmkVNx8S7QLnGXyrIzjWrJ9o=
+		</data>
+                        <key>Tab</key>
+                        <data>
+		wy4WHTX90JQc+e+Wqrd0Lmq1WkbVA2VCe/njKSWQ9bs=
+		</data>
+                    </dict>
+                    <key>NSStoreModelVersionHashesVersion</key>
+                    <integer>3</integer>
+                    <key>NSStoreModelVersionIdentifiers</key>
+                    <array></array>
+                </dict>
+            </plist>
+        </metadata>
+    </databaseInfo>
+    <object type="SCRIPT" id="z102">
+        <attribute name="path" type="string">/usr/bin/ruby</attribute>
+        <attribute name="name" type="string">Ruby</attribute>
+        <attribute name="order" type="int32">3</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT" idrefs="z109 z129 z123 z117 z111 z104 z113 z105 z132"></relationship>
+    </object>
+    <object type="SLOT" id="z103">
+        <attribute name="value" type="string">#Packagescript
+#!/usr/bin/ruby
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+
+pkgname       = wrapquotes "M#Name=[Required] Name of Package#"
+pkgadminfile  = wrapquotes "M#Adminfile=[optional]#"
+pkgensure     = wrapquotes "M#Ensure=[optional] Absent, installed, present, purged, held, or latest#"
+pkgallowcd    = wrapquotes "M#Allow CDrom=[optional] True or False#"
+pkgcfgfiles   = wrapquotes "M#Config Files=[optional] Keep or Replace#"
+pkgflavor     = wrapquotes "M#Flavor=[optional]#"
+pkginstopt    = wrapquotes "M#Install Options=[optional] hash of additional options#"
+pkgrespfile   = wrapquotes "M#Response File=[optional]#"
+pkgsource     = wrapquotes "M#Source=[optional] Local file or url to packagefile#"
+metaalias     = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit     = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore    = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck     = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel  = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop      = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+metanotify    = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metasubscribe = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metarequire   = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule  = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage     = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metatag       = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+unless "M#Name#" == "[Required] Name of Package"
+   puts "package { "+pkgname+":"
+end
+case "M#Ensure#"
+  when /^absent$/i
+    puts "  ensure        =\u3e00  'absent',"
+  when /^(present|installed)$/i
+    puts "  ensure        =\u3e00  'present',"
+      when /^purged$/i
+    puts "  ensure        =\u3e00  'purged',"
+      when /^held$/i
+    puts "  ensure        =\u3e00  'held',"
+      when /^latest$/i
+    puts "  ensure        =\u3e00  'latest',"
+ end
+case "M#Allow CDrom#"
+  when /^(0|false)$/i
+    puts "  allowcdrom    =\u3e00  'false',"
+  when /^(1|true)$/i
+    puts "  allowcdrom    =\u3e00  'true',"
+end
+unless "M#Adminfile#" =~ /\\[optional\\]/
+  puts "  adminfile     =\u3e00  "+pkgadminfile+","
+end
+case "M#Config Files#"
+  when /^keep$/i
+    puts "  configfiles   =\u3e00  'keep',"
+  when /^replace$/i
+    puts "  configfiles   =\u3e00  'replace',"
+end
+unless "M#Flavor#"=~ /\\[optional\\]/
+  puts "  flavor        =\u3e00  "+pkgflavor+","
+end
+unless "M#Install Options#"=~ /\\[optional\\]/
+  puts "  install_options  =\u3e00  "+pkginstopt+","
+end
+unless "M#Response File#"=~ /\\[optional\\]/
+  puts "  responsefile  =\u3e00  "+pkgrespfile+","
+end
+unless "M#Source#" =~ /\\[optional\\]/
+  puts "  source        =\u3e00  "+pkgsource+","
+end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias         =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit         =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before        =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check         =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel      =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop          =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify        =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require       =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule      =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage         =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe     =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag           =\u3e00  "+metatag+","
+end
+
+puts "}"</attribute>
+        <attribute name="title" type="string">Package</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">6</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">7</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+    <object type="SLOT" id="z104">
+        <attribute name="value" type="string">#Hostscript
+#!/usr/bin/ruby
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+
+hostname      = wrapquotes "M#Name=[Required] hostname#"
+hostensure    = wrapquotes "M#Ensure=[optional] Present or absent#"
+host_aliases  = wrapquotes "M#Host Aliases=[optional]#"
+hostip        = wrapquotes "M#IP=[Required]#"
+hosttarget    = wrapquotes "M#Target=[optional]#"
+hostcomment   = wrapquotes "M#Comment=[optional] comment#"
+
+metaalias     = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit     = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore    = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck     = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel  = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop      = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+metanotify    = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metasubscribe = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metarequire   = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule  = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage     = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metatag       = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+unless "M#Name#" =~ /\\[Required\\] hostname/
+   puts "host { "+hostname+":"
+end
+case "M#Ensure#"
+  when /^absent$/i
+    puts "  ensure        =\u3e00 'absent',"
+  when /^present$/i
+    puts "  ensure        =\u3e00 'present',"
+end
+unless "M#Host Aliases#" =~ /\\[optional\\]/
+  puts "  host_aliases  =\u3e00  "+host_aliases+","
+end
+unless "M#IP#" =~ /\\[Required\\]/
+  puts "  ip            =\u3e00  "+hostip+","
+end
+unless "M#Target#" =~ /\\[optional\\]/
+  puts "  target        =\u3e00  "+hosttarget+","
+end
+unless "M#Comment#" =~ /\\[optional\\]/
+  puts "  comment       =\u3e00  "+hostcomment+","
+end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias         =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit         =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before        =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check         =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel      =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop          =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify        =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require       =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule      =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage         =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe     =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag       =\u3e00  "+metatag+","
+end
+
+puts "}"</attribute>
+        <attribute name="title" type="string">Host</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">4</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">5</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT" idrefs="z102"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+    <object type="SLOT" id="z105">
+        <attribute name="value" type="string">#exec script
+#!/usr/bin/ruby
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+
+execname        = wrapquotes "M#Namevar=[optional] Pretty name#"
+execcommand     = wrapquotes "M#Command=Required: command to execute#" 
+execcwd         = wrapquotes "M#CWD=[optional] Directory to perform the exec#"
+execenvironment = wrapquotes "M#Environment=[optional]#"
+execgroup       = wrapquotes "M#Group=[optional] Group name or gid#"
+execuser        = wrapquotes "M#User=[optional] User name or uid#"
+execlogoutput   = wrapquotes "M#Log Output=[optional] True, False, or on_failure#"
+execonlyif      = wrapquotes "M#Only if=[optional]#"
+execpath        = wrapquotes "M#Path=[optional]#"
+execrefresh     = wrapquotes "M#Refresh=[optional]#"
+execreturns     = wrapquotes "M#Returns=[optional]#"
+exectimeout     = wrapquotes "M#Timeout=[optional]#"
+exectries       = wrapquotes "M#Tries=[optional]#"
+exectrysleep    = wrapquotes "M#Try Sleep=[optional]#"
+execunless      = wrapquotes "M#Unless=[optional]#"
+metaalias       = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit       = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore      = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck       = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel    = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop        = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+execrefreshonly = wrapquotes "M#refreshonly=[optional] True or False. Only relevant if using subscribe or notify#"
+metanotify      = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metasubscribe   = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metarequire     = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule    = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage       = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metatag         = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+if "M#Namevar#" == "[optional] Pretty name" then
+   puts "exec { "+execcommand+":"
+else
+  puts "exec { "+execname+":"
+  puts "  command      =\u3e00 "+execcommand+","
+end
+
+unless "M#Group#" =="[optional] Group name or gid"
+  puts "  group        =\u3e00 "+execgroup+","
+end
+
+unless "M#User#" =="[optional] User name or uid"
+  puts "  user         =\u3e00 "+execuser+","
+end
+
+unless "M#CWD#" =~ /\\[optional\\] Directory to perform the exec/
+  puts "  cwd          =\u3e00  "+execcwd+","
+end
+
+unless "M#Environment#" =~ /\\[optional\\]/
+  puts "  environment  =\u3e00  "+execenvironment+","
+end
+
+case "M#Log Output#"
+  when /^true$/i
+    puts "  logoutput    =\u3e00 'true',"
+  when /^false$/i
+    puts "  logoutput    =\u3e00 'false',"
+  when /^on(_| )?failure$/i
+    puts "  logoutput    =\u3e00 'on_failure',"
+end
+
+unless "M#Only if#" =~ /\\[optional\\]/
+  puts "  onlyif       =\u3e00  "+execonlyif+","
+end
+
+unless "M#Path#" =~ /\\[optional\\]/
+  puts "  path         =\u3e00  "+execpath+","
+end
+
+unless "M#Refresh#" =~ /\\[optional\\]/
+  puts "  refresh      =\u3e00  "+execrefresh+","
+end
+
+unless "M#Returns#" =~ /\\[optional\\]/
+  puts "  returns     =\u3e00  "+execreturns+","
+end
+
+unless "M#Timeout#" =~ /\\[optional\\]/
+  puts "  timeout      =\u3e00  "+exectimeout+","
+end
+
+unless "M#Tries#" =~ /\\[optional\\]/
+  puts "  tries        =\u3e00  "+exectries+","
+end
+
+unless "M#Try Sleep#" =~ /\\[optional\\]/
+  puts "  try_sleep    =\u3e00  "+exectrysleep+","
+end
+
+unless "M#Unless#" =~ /\\[optional\\]/
+  puts "  unless       =\u3e00  "+execunless+","
+end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias        =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit        =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before       =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check        =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel     =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop         =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify       =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require      =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule     =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage        =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe    =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag          =\u3e00  "+metatag+","
+end
+
+puts "}"</attribute>
+        <attribute name="title" type="string">Exec</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">1</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">2</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT" idrefs="z102"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+    <object type="TAB" id="z106">
+        <attribute name="identifier" type="int16">3</attribute>
+        <attribute name="order" type="int32">5</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z107">
+        <attribute name="identifier" type="int16">11</attribute>
+        <attribute name="order" type="int32">13</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z108">
+        <attribute name="identifier" type="int16">6</attribute>
+        <attribute name="order" type="int32">8</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="SLOT" id="z109">
+        <attribute name="value" type="string">#!/usr/bin/ruby
+
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+
+cronname = wrapquotes "M#Name=[optional] Pretty name#"
+croncommand = wrapquotes "M#Command=[Required] The command to execute#"
+cronensure = wrapquotes "M#Ensure=[optional] Present or absent#"
+cronenvironment = wrapquotes "M#Environment=[optional]#"
+cronhour = wrapquotes "M#Hour=[optional] 0-23#"
+cronminute = wrapquotes "M#Minute=[optional] 0-59#"
+cronmonth = wrapquotes "M#Month=[optional] 1-12 Month name#"
+cronmonthday = wrapquotes "M#Month Day=[optional] 1-31#"
+cronspecial = wrapquotes "M#Special=[optional]#"
+crontarget = wrapquotes "M#Target=[optional]#"
+cronuser = wrapquotes "M#User=[optional]#"
+cronweekday = wrapquotes "M#Weekday=[optional] 0-7 or Name of day#"
+metaalias = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+metanotify = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metarequire = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metasubscribe = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metatag = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+if "M#Name#" == "[optional] Pretty name" then
+   puts "cron { "+croncommand+":"
+else
+  puts "cron { "+cronname+":"
+  puts "  command      =\u3e00 "+croncommand+","
+end
+
+case "M#Ensure#"
+  when /^absent$/i
+    puts "  ensure       =\u3e00 'absent',"
+  when /^present$/i
+    puts "  ensure       =\u3e00 'present',"
+end
+
+unless "M#Environment#" =~ /\\[optional\\]/
+  puts "  environment  =\u3e00  "+cronenvironment+","
+end
+unless "M#Hour#" =~ /\\[optional\\] 0-23/
+  puts "  hour         =\u3e00  "+cronhour+","
+end
+unless "M#Minute#" =~ /\\[optional\\] 0-59/
+  puts "  minute       =\u3e00  "+cronminute+","
+end
+
+unless "M#Month#" =~ /\\[optional\\] 1-12 Month name/
+  puts "  month        =\u3e00  "+cronmonth+","
+end
+
+unless "M#Month Day#" =~ /\\[optional\\] 1-31/
+  puts "  monthday     =\u3e00  "+cronmonthday+","
+end
+
+unless "M#Special#" =~ /\\[optional\\]/
+  puts "  special      =\u3e00  "+cronspecial+","
+end
+
+unless "M#Target#" =~ /\\[optional\\]/
+  puts "  target       =\u3e00  "+crontarget+","
+end
+
+unless "M#User#" =~ /\\[optional\\]/
+  puts "  user         =\u3e00  "+cronuser+","
+end
+
+unless "M#Weekday#" =~ /\\[optional\\] 0-7 or Name of day/
+  puts "  weekday      =\u3e00  "+cronweekday+","
+end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias        =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit        =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before       =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check        =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel     =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop         =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify       =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require      =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule     =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage        =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe    =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag          =\u3e00  "+metatag+","
+end
+
+
+puts "}"</attribute>
+        <attribute name="title" type="string">Cron</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">0</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">1</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT" idrefs="z102"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+    <object type="TAB" id="z110">
+        <attribute name="identifier" type="int16">13</attribute>
+        <attribute name="order" type="int32">15</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="SLOT" id="z111">
+        <attribute name="value" type="string">#Tidyscript
+#!/usr/bin/ruby
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+
+tidyname      = wrapquotes "M#Name=[optional] Pretty name#"
+tidypath      = wrapquotes "M#Path=[Required] Path to tidy#"
+tidyage       = wrapquotes "M#Age=[optional] Age to prune#"
+tidybackup    = wrapquotes "M#Backup=[optional]#"
+tidymatches   = wrapquotes "M#Matches=[optional] One or more file patterns to match#"
+tidyrecurse   = wrapquotes "M#Recurse=[optional] True, false, or inf#"
+tidyrmdirs    = wrapquotes "M#RMDirs=[optional] True or false#"
+tidysize      = wrapquotes "M#Size=[optional] value in b, k(default), m, g, or t #"
+
+tidytype      = wrapquotes "M#Type=[optional] what to test on: atime, mtime, or ctime#"
+
+metaalias     = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit     = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore    = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck     = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel  = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop      = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+metanotify    = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metasubscribe = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metarequire   = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule  = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage     = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metatag       = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+if "M#Name#" == "[optional] Pretty name" then
+   puts "tidy { "+tidypath+":"
+else
+  puts "tidy { "+tidyname+":"
+  puts "  path      =\u3e00 "+tidypath+","
+end
+unless "M#Age#" =~ /\\[optional\\]/
+  puts "  age       =\u3e00  "+tidyage+","
+end
+unless "M#Backup#" =~ /\\[optional\\]/
+  puts "  backup    =\u3e00  "+tidybackup+","
+end
+unless "M#Matches#" =~ /\\[optional\\]/
+  puts "  matches   =\u3e00  "+tidymatches+","
+end
+case "M#Recurse#"
+  when /^false$/i
+    puts "  recurse   =\u3e00  'false',"
+  when /^true$/i
+    puts "  recurse   =\u3e00  'true',"
+  when /^inf$/i
+    puts "  recurse   =\u3e00  'inf',"
+end
+case "M#RMDirs#"
+  when /^false$/i
+    puts "  rmdirs    =\u3e00  'false',"
+  when /^true$/i
+    puts "  rmdirs    =\u3e00  'true',"
+end
+if "M#Size#" =~ /^[0-9]+(b|k|g|m|t|bytes|kilobytes|megabytes|gigabytes|terabytes)/i
+  puts "  size      =\u3e00  "+tidysize+","
+end
+case "M#Type#"
+  when /^atime$/i
+    puts "  type      =\u3e00  'atime',"
+  when /^mtime$/i
+    puts "  type      =\u3e00  'atime',"
+  when /^ctime$/i
+    puts "  type      =\u3e00  'atime'," 
+ end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias     =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit     =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before    =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check     =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel  =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop      =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify    =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require   =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule  =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage     =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag       =\u3e00  "+metatag+","
+end
+
+puts "}"</attribute>
+        <attribute name="title" type="string">Tidy</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">8</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">9</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT" idrefs="z102"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+    <object type="SCRIPT" id="z112">
+        <attribute name="path" type="string">/usr/bin/python</attribute>
+        <attribute name="name" type="string">Python</attribute>
+        <attribute name="order" type="int32">2</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="SLOT" id="z113">
+        <attribute name="value" type="string">#user script
+#!/usr/bin/ruby
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+
+
+username        = wrapquotes "M#Username=[Required] User name#"
+userensure      = wrapquotes "M#Ensure=[optional] Present, absent, or role#" 
+usercomment     = wrapquotes "M#Comment=[optional] A description or the user's full name#"
+useruid         = wrapquotes "M#UID=[optional] The numerical user ID#"
+usergid         = wrapquotes "M#GID=[optional] The user's primary group. name or gid#"
+usergroups      = wrapquotes "M#Addtl Groups=[optional] The groups to which the user belongs#"
+userhome        = wrapquotes "M#Homedir=[optional] The home directory of the user#"
+usermanagehome  = wrapquotes "M#Manage Home=[optional] True or false#"
+usershell       = wrapquotes "M#Shell=[optional] The user's login shell#"
+usersystem      = wrapquotes "M#System Account=[optional] True or false#"
+userpassword    = wrapquotes "M#Password=[optional]#"
+userpassmaxage  = wrapquotes "M#Password Max Age=[optional]#"
+userpassminage  = wrapquotes "M#Password Min Age=[optional]#"
+userexpiry      = wrapquotes "M#Expiry=[optional] The user's expiry date in YYYY-MM-DD format#"
+userallowdupe   = wrapquotes "M#Allow Duplicates=[optional] True or false#"
+userattrmemb    = wrapquotes "M#Attr Membership=[optional] Inclusive or minimum#"
+userattr        = wrapquotes "M#Attributes=[optional] The attributes the user has#"
+userauthmemb    = wrapquotes "M#Auth Membership=[optional] Inclusive or minimum#"
+userauth        = wrapquotes "M#Auths=[optional] The auths the user has#"
+useriaload      = wrapquotes "M#IA Load Mod=[optional] The name of the I\u2600A module to use to manage this user#"
+userkeymember   = wrapquotes "M#Key membership=[optional] Inclusive or minimum#"
+userkeys        = wrapquotes "M#Keys=[optional]#"
+usermembership  = wrapquotes "M#Membership=[optional] Inclusive or minimum#"
+userprofmemb    = wrapquotes "M#Profile Membership=[optional] Inclusive or minimum#"
+userprofiles    = wrapquotes "M#Profiles=[optional]#"
+
+userproject     = wrapquotes "M#Project=[optional]#"
+userrolememb    = wrapquotes "M#Role Membership=[optional] Inclusive or minimum#"
+userroles       = wrapquotes "M#Roles=[optional]#"
+
+metaalias       = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit       = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore      = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck       = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel    = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop        = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+metanotify      = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metasubscribe   = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metarequire     = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule    = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage       = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metatag         = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+unless "M#Username" =~ /\\[Required\\]/
+   puts "user { "+username+":"
+end
+case "M#Ensure#"
+  when /^absent$/i
+    puts "  ensure        =\u3e00 'absent',"
+  when /^present$/i
+    puts "  ensure        =\u3e00 'present',"
+  when /^role$/i
+    puts "  ensure        =\u3e00 'role',"
+end
+unless "M#Comment#" =~ /\\[optional\\]/
+  puts "  comment        =\u3e00 "+usercomment+","
+end
+unless "M#UID#" =~ /\\[optional\\]/
+  puts "  uid        =\u3e00 "+useruid+","
+end
+unless "M#GID#" =~ /\\[optional\\]/
+  puts "  gid        =\u3e00 "+usergid+","
+end
+unless "M#Addtl Groups#" =~ /\\[optional\\]/
+  puts "  groups        =\u3e00 "+usergroups+","
+end
+unless "M#Homedir#" =~ /\\[optional\\]/
+  puts "  home        =\u3e00 "+userhome+","
+end
+case "M#Manage Home#"
+  when /^true$/i
+    puts "  managehome  =\u3e00 'true',"
+  when /^false$/i
+    puts "  managehome  =\u3e00 'false',"
+end
+unless "M#Shell#" =~ /\\[optional\\]/
+  puts "  shell        =\u3e00 "+usershell+","
+end
+case "M#System Account#"
+  when /^true$/i
+    puts "  system  =\u3e00 'true',"
+  when /^false$/i
+    puts "  system  =\u3e00 'false',"
+end
+unless "M#Password#" =~ /\\[optional\\]/
+  puts "  password        =\u3e00 "+userpassword+","
+end
+unless "M#Password Max Age#" =~ /\\[optional\\]/
+  puts "  password_max_age  =\u3e00 "+userpassmaxage+","
+end
+unless "M#Password Min Age#" =~ /\\[optional\\]/
+  puts "  password_min_age  =\u3e00 "+userpassminage+","
+end
+if "M#Expiry#" =~ /\\d\\d\\d\\d-\\d\\d-\\d\\d/
+  puts "  expiry        =\u3e00 "+userexpiry+","
+end
+case "M#Allow Duplicates#"
+  when /^true$/i
+    puts "  allowdupe  =\u3e00 'true',"
+  when /^false$/i
+    puts "  allowdupe  =\u3e00 'false',"
+end
+case "M#Attr Membership#"
+  when /^inclusive$/i
+    puts "  attribute_membership  =\u3e00 'inclusive',"
+  when /^minimum$/i
+    puts "  attribute_membership  =\u3e00 'minimum',"
+end
+unless "M#Attributes#" =~ /\\[optional\\]/
+  puts "  attributes        =\u3e00 "+userattr+","
+end
+case "M#Auth Membership#"
+  when /^inclusive$/i
+    puts "  auth_membership  =\u3e00 'inclusive',"
+  when /^minimum$/i
+    puts "  auth_membership  =\u3e00 'minimum',"
+end
+unless "M#Auths#" =~ /\\[optional\\]/
+  puts "  auths        =\u3e00 "+userauth+","
+end
+unless "M#IA Load Mod#" =~ /\\[optional\\]/
+  puts "  ia_load_module  =\u3e00 "+useriaload+","
+end
+case "M#Key Membership#"
+  when /^inclusive$/i
+    puts "  key_membership  =\u3e00 'inclusive',"
+  when /^minimum$/i
+    puts "  key_membership  =\u3e00 'minimum',"
+end
+unless "M#Keys#" =~ /\\[optional\\]/
+  puts "  keys        =\u3e00 "+userkeys+","
+end
+case "M#Membership#"
+  when /^inclusive$/i
+    puts "  membership  =\u3e00 'inclusive',"
+  when /^minimum$/i
+    puts "  membership  =\u3e00 'minimum',"
+end
+case "M#Profile Membership#"
+  when /^inclusive$/i
+    puts "  profile_membership  =\u3e00 'inclusive',"
+  when /^minimum$/i
+    puts "  profile_membership  =\u3e00 'minimum',"
+end
+unless "M#Profiles#" =~ /\\[optional\\]/
+  puts "  profiles  =\u3e00 "+userprofiles+","
+end
+unless "M#Project#" =~ /\\[optional\\]/
+  puts "  project        =\u3e00 "+userproject+","
+end
+
+case "M#Role Membership#"
+  when /^inclusive$/i
+    puts "  role_membership  =\u3e00 'inclusive',"
+  when /^minimum$/i
+    puts "  role_membership  =\u3e00 'minimum',"
+end
+unless "M#Roles#" =~ /\\[optional\\]/
+  puts "  roles  =\u3e00 "+userroles+","
+end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias        =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit        =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before       =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check        =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel     =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop         =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify       =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require      =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule     =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage        =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe    =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag          =\u3e00  "+metatag+","
+end
+
+puts "}"</attribute>
+        <attribute name="title" type="string">User</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">9</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">10</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT" idrefs="z102"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+    <object type="SCRIPT" id="z114">
+        <attribute name="path" type="string">/usr/bin/osascript</attribute>
+        <attribute name="name" type="string">AppleScript</attribute>
+        <attribute name="order" type="int32">4</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="LABEL" id="z115">
+        <attribute name="name" type="string">Puppet</attribute>
+        <attribute name="fgcolordata" type="binary">YnBsaXN0MDDUAQIDBAUGFRZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKMH
+CA9VJG51bGzTCQoLDA0OViRjbGFzc1xOU0NvbG9yU3BhY2VVTlNSR0KAAhABTxAhMC45MDE5NjA3OSAwLjkwMTk2MDc5IDAuOTAxOTYwNzkA0hAREhNaJGNsYXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohIUWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hpdmVy0RcYVHJvb3SAAQgRGiMtMjc7QUhPXGJkZoqPmqOrrrfJzNEAAAAAAAABAQAAAAAAAAAZAAAAAAAAAAAAAAAAAAAA0w==
+</attribute>
+        <attribute name="bgcolordata" type="binary">YnBsaXN0MDDUAQIDBAUGFRZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKMH
+CA9VJG51bGzTCQoLDA0OViRjbGFzc1xOU0NvbG9yU3BhY2VVTlNSR0KAAhABTxAoMC4xMzUyOTI1NDQ3IDAuMDQ2Mzg4NDkxMDYgMC4yMzUyOTQxMTc2ANIQERITWiRjbGFzc25hbWVYJGNsYXNzZXNXTlNDb2xvcqISFFhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEXGFRyb290gAEIERojLTI3O0FIT1xiZGaRlqGqsrW+0NPYAAAAAAAAAQEAAAAAAAAAGQAAAAAAAAAAAAAAAAAAANo=
+</attribute>
+        <attribute name="order" type="int32">1</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT" idrefs="z109 z129 z123 z103 z117 z104 z111 z113 z105 z132"></relationship>
+    </object>
+    <object type="TAB" id="z116">
+        <attribute name="identifier" type="int16">2</attribute>
+        <attribute name="order" type="int32">4</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="SLOT" id="z117">
+        <attribute name="value" type="string">#Servicescript
+#!/usr/bin/ruby
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+
+svcname       = wrapquotes "M#Name=[Required] Name of service#"
+svcensure     = wrapquotes "M#Ensure=[optional] True, running, false, or stopped#"
+svcenable     = wrapquotes "M#Enable=[optional] True, false, or manual#"
+svcbinary     = wrapquotes "M#Binary=[optional] Path to the daemon#"
+svchasrestart = wrapquotes "M#Has Restart=[optional] True or false#"
+svchasstatus  = wrapquotes "M#Has Status=[optional] True or false#"
+svcmanifest   = wrapquotes "M#Manifest=[optional]#"
+svcpath       = wrapquotes "M#Path=[optional] search path for finding initscripts#"
+svcpattern    = wrapquotes "M#Pattern=[optional] pattern to search for in the process table#"
+
+svcrestart    = wrapquotes "M#Restart=[optional]#"
+svcstart      = wrapquotes "M#Start=[optional]#"
+svcstatus     = wrapquotes "M#Status=[optional]#"
+svcstop       = wrapquotes "M#Stop=[optional]#"
+svccontrol    = wrapquotes "M#Control=[optional]#"
+
+metaalias     = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit     = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore    = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck     = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel  = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop      = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+metanotify    = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metasubscribe = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metarequire   = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule  = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage     = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metatag       = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+unless "M#Name#" == "[Required] Name of service"
+   puts "service { "+svcname+":"
+end
+case "M#Ensure#"
+  when /^(true|running)$/i
+    puts "  ensure      =\u3e00  'running',"
+  when /^(false|stopped)$/i
+    puts "  ensure      =\u3e00  'stopped',"
+ end
+case "M#Enable#"
+  when /^true$/i
+    puts "  enable      =\u3e00  'running',"
+  when /^false$/i
+    puts "  enable      =\u3e00  'stopped',"
+ end
+unless "M#Binary#" =~ /\\[optional\\]/
+  puts "  binary      =\u3e00  "+svcbinary+","
+end
+case "M#Has Status#"
+  when /^false$/i
+    puts "  hasstatus   =\u3e00  'false',"
+  when /^true$/i
+    puts "  hasstatus   =\u3e00  'true',"
+end
+case "M#Has Restart#"
+  when /^false$/i
+    puts "  hasrestart  =\u3e00  'false',"
+  when /^true$/i
+    puts "  hasrestart  =\u3e00  'true',"
+end
+unless "M#Manifest#" =~ /\\[optional\\]/
+  puts "  manifest    =\u3e00  "+svcmanifest+","
+end
+unless "M#Path#" =~ /\\[optional\\]/
+  puts "  path        =\u3e00  "+svcpath+","
+end
+unless "M#Pattern#" =~ /\\[optional\\]/
+  puts "  pattern     =\u3e00  "+svcpattern+","
+end
+unless "M#Restart#" =~ /\\[optional\\]/
+  puts "  restart     =\u3e00  "+svcrestart+","
+end
+unless "M#Start#" =~ /\\[optional\\]/
+  puts "  start       =\u3e00  "+svcstart+","
+end
+unless "M#Status#" =~ /\\[optional\\]/
+  puts "  status      =\u3e00  "+svcstatus+","
+end
+unless "M#Stop#" =~ /\\[optional\\]/
+  puts "  stop        =\u3e00  "+svcstop+","
+end
+unless "M#Control#" =~ /\\[optional\\]/
+  puts "  control     =\u3e00  "+svccontrol+","
+end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias       =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit       =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before      =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check       =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel    =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop        =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify      =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require     =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule    =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage       =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe   =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag         =\u3e00  "+metatag+","
+end
+
+puts "}"</attribute>
+        <attribute name="title" type="string">Service</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">7</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">8</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT" idrefs="z102"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+    <object type="TAB" id="z118">
+        <attribute name="identifier" type="int16">9</attribute>
+        <attribute name="order" type="int32">11</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z119">
+        <attribute name="identifier" type="int16">14</attribute>
+        <attribute name="order" type="int32">16</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="SCRIPT" id="z120">
+        <attribute name="path" type="string">/usr/bin/perl</attribute>
+        <attribute name="name" type="string">Perl</attribute>
+        <attribute name="order" type="int32">1</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z121">
+        <attribute name="identifier" type="int16">7</attribute>
+        <attribute name="order" type="int32">9</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z122">
+        <attribute name="identifier" type="int16">15</attribute>
+        <attribute name="order" type="int32">1</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT" idrefs="z109 z129 z123 z103 z117 z104 z111 z113 z105 z132"></relationship>
+    </object>
+    <object type="SLOT" id="z123">
+        <attribute name="value" type="string">#Groupscript
+#!/usr/bin/ruby
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+
+groupname                = wrapquotes "M#Namevar=[Required] Name of group#"
+groupensure              = wrapquotes "M#Ensure=[optional] Absent or Present#"
+groupgid                 = wrapquotes "M#GID=[Optional] Specified numerically#"
+groupallowdupe           = wrapquotes "M#AllowDupe=[Optional] True or False#" 
+groupattributemembership = wrapquotes "M#Attr Membership=[optional] Inclusive or Minimum#"
+groupattrbutes           = wrapquotes "M#Attributes=[optional] Array of key\\=value pairs#"
+groupauthmembership      = wrapquotes "M#Auth Membership=[optional]#"
+groupialoadmodule        = wrapquotes "M#IA Load Module=[optional]#"
+groupmembers             = wrapquotes "M#Members=[optional]#"
+groupsystem              = wrapquotes "M#System=[optional]#"
+metaalias                = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit                = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore               = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck                = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel             = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop                 = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+grouprefreshonly         = wrapquotes "M#refreshonly=[optional] True or False. Only relevant if using subscribe or notify#"
+metanotify               = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metasubscribe            = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metarequire              = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule             = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage                = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metatag                  = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+unless "M#Name#" == "[Required] Name of group"
+   puts "group { "+groupname+":"
+end
+
+case "M#Ensure#"
+  when /^absent$/i
+    puts "  ensure           =\u3e00  'absent',"
+  when /^present$/i
+    puts "  ensure           =\u3e00  'present',"
+ end
+
+ unless "M#GID#" =="[optional] Specified numerically"
+  puts "  gid              =\u3e00  "+groupgid+","
+end
+
+case "M#Allow Dupe#"
+  when /^true$/i
+    puts "  allowdupe    =\u3e00  'true',"
+  when /^false$/i
+    puts "  allowdupe    =\u3e00  'false',"
+end
+
+case "M#Attribute Membership#"
+  when /^inclusive$/i
+    puts "  attribute_membership  =\u3e00  'inclusive',"
+  when /^minimum$/i
+    puts "  attribute_membership  =\u3e00  'minimum',"
+end
+
+unless "M#Attributes#" =="[optional] Array of key=value pairs"
+  puts "  attributes       =\u3e00  "+groupattrbutes+","
+end
+
+unless "M#Auth Membership#" =~ /\\[optional\\]/
+  puts "  auth_membership  =\u3e00  "+groupauthmembership+","
+end
+
+unless "M#IA Load Module#" =~ /\\[optional\\]/
+  puts "  ia_load_module   =\u3e00  "+groupialoadmodule+","
+end
+
+unless "M#Members#" =~ /\\[optional\\]/
+  puts "  members          =\u3e00  "+groupmembers+","
+end
+
+case "M#System#"
+  when /^true$/i
+    puts "  system    =\u3e00  'true',"
+  when /^false$/i
+    puts "  system    =\u3e00  'false',"
+end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias            =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit            =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before           =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check            =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel         =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop             =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify           =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require          =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule         =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage            =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe        =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag              =\u3e00  "+metatag+","
+end
+
+puts "}"</attribute>
+        <attribute name="title" type="string">Group</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">3</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">4</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT" idrefs="z102"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+    <object type="TAB" id="z124">
+        <attribute name="identifier" type="int16">0</attribute>
+        <attribute name="order" type="int32">2</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z125">
+        <attribute name="identifier" type="int16">4</attribute>
+        <attribute name="order" type="int32">6</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z126">
+        <attribute name="identifier" type="int16">5</attribute>
+        <attribute name="order" type="int32">7</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z127">
+        <attribute name="identifier" type="int16">8</attribute>
+        <attribute name="order" type="int32">10</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z128">
+        <attribute name="identifier" type="int16">12</attribute>
+        <attribute name="order" type="int32">14</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="SLOT" id="z129">
+        <attribute name="value" type="string">#File script
+#!/usr/bin/ruby
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+def maskfix(inputstring)
+  if inputstring =~/^\\d?\\d\\d\\d$/
+    if inputstring.length == 3
+      newstring = "0#{inputstring}"
+      newstring
+    else
+      inputstring
+    end
+  else
+    inputstring = "invalidmaskprovided"
+    inputstring
+  end
+end
+namevar       = wrapquotes "M#Namevar=[optional] Pretty name#"
+path          = wrapquotes "M#Path=Required: Location of file#" 
+datasource    = wrapquotes "M#Datasource=[optional] content, source, or target#"
+data          = wrapquotes "M#Data=Required: value for Datasource attribute#"
+sourceselect  = wrapquotes "M#Sourceselect=[optional] [source only] all,first#"
+fileensure    = wrapquotes  "M#Ensure=[optional] absent,directory,file,link, or present#"
+backup        = wrapquotes "M#Backup=[optional]#"
+checksum      = wrapquotes "M#Checksum=[optional] md5,md5lite,mtime,ctime,none#"
+mask          = wrapquotes maskfix "M#Mode=[optional] mode numerical value#"
+group         = wrapquotes "M#Group=[optional] Group name or gid#"
+owner         = wrapquotes "M#Owner=[optional] User name or uid#"
+ignore        = wrapquotes "M#Ignore=[optional]#"
+links         = wrapquotes "M#Links=[optional] Follow or manage#"
+purge         = wrapquotes "M#Purge=[optional] True or False#"
+recurse       = wrapquotes "M#Recurse=[optional] True, false, inf, or remote#"
+recurselimit  = wrapquotes "M#Recurse Limit=[optional]  /^[0-9]+$/#"
+replace       = wrapquotes "M#Replace=[optional]  true, yes, false, or no#"
+selinuxignoredefaults = wrapquotes "M#SELinux Ignore Defaults=[optional] True, False#"
+selrange      = wrapquotes "M#SELinux Range=[optional]#"
+selrole       = wrapquotes "M#SELinux Role=[optional]#"
+seltype       = wrapquotes "M#SELinux Type=[optional]#"
+seluser       = wrapquotes "M#SELinux User=[optional]#"
+metaalias     = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit     = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore    = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck     = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel  = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop      = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+metanotify    = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metarequire   = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule  = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage     = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metasubscribe = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metatag       = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+
+if "M#Namevar#" == "[optional] Pretty name" then
+   puts "file { "+path+":"
+else
+  puts "file { "+namevar+":"
+  puts "  path           =\u3e00 "+path+","
+end
+
+case "M#Ensure#"
+  when /^absent$/i
+    puts "  ensure         =\u3e00 'absent',"
+  when /^directory$/i
+    puts "  ensure         =\u3e00 'directory',"
+  when /^file$/i
+    puts "  ensure         =\u3e00 'file',"
+  when /^link$/i
+    puts "  ensure         =\u3e00 'link',"
+  when /^present$/i
+    puts "  ensure         =\u3e00 'present',"
+end
+
+case "M#Datasource#"
+  when /^content$/i
+    puts "  content        =\u3e00 "+data+","
+  when /^source$/i
+    puts "  source         =\u3e00 "+data+","
+    case "M#Sourceselect#"
+      when /^all$/i
+        puts "  sourceselect   =\u3e00 'all',"
+      when /^first$/i
+        puts "  sourceselect   =\u3e00 'first',"
+    end
+  when /^target$/i
+    puts "  target          =\u3e00 "+data+","
+end
+
+if "M#Checksum#" =~ /\\A(?:md5|md5lite|mtime|ctime|none)\\z/
+    puts "  checksum       =\u3e00 "+checksum+","
+end
+
+unless "M#Backup#" == "[optional]" then
+  puts "  backup         =\u3e00 "+backup+","
+end
+
+unless "M#Mode#" == "[optional] mode numerical value"
+  puts "  mode           =\u3e00 "+mask+","
+end
+
+unless "M#Group#" =="[optional] Group name or gid"
+  puts "  group          =\u3e00 "+group+","
+end
+
+unless "M#Owner#" =="[optional] User name or uid"
+  puts "  owner          =\u3e00 "+owner+","
+end
+
+unless "M#Ignore#" =="[optional]"
+  puts "  ignore         =\u3e00 "+ignore+","
+end
+
+case "M#Links#"
+  when /^follow$/i
+    puts "  links          =\u3e00 'follow',"
+  when /^ignore$/i
+    puts "  links          =\u3e00 'ignore',"
+end
+
+case "M#Purge#"
+  when /^true$/i
+    puts "  purge          =\u3e00 'true',"
+  when /^false$/i
+    puts "  purge          =\u3e00 'false',"
+end
+
+case "M#Recurse#"
+  when /^true$/i
+    puts "  recurse        =\u3e00 'true',"
+  when /^false$/i
+    puts "  recurse        =\u3e00 'false',"
+  when /^inf$/i
+    puts "  recurse        =\u3e00 'inf',"
+  when /^remote$/i
+    puts "  recurse        =\u3e00 'remote',"
+end
+
+unless "M#Recurse Limit#" =~ /\\[optional\\]/
+  puts "  recurselimit   =\u3e00 "+recurselimit+","
+end
+
+case "M#Replace#"
+  when /^true$/i
+    puts "  replace        =\u3e00 'true',"
+  when /^false$/i
+    puts "  replace        =\u3e00 'false',"
+  when /^yes$/i
+    puts "  replace        =\u3e00 'yes',"
+  when /^no$/i
+    puts "  replace        =\u3e00 'no',"
+end
+
+case "M#SELinux Ignore Defaults#"
+  when /^true$/i
+   puts "  selinux_ignore_defaults  =\u3e00 'true',"
+  when /^false$/i
+    puts "  selinux_ignore_defaults  =\u3e00 'false',"
+end
+
+unless "M#SELinux Range#"  =~ /\\[optional\\]/
+  puts "  selrange       =\u3e00 "+ selrange+","
+end
+
+unless "M#SELinux Role#"  =~ /\\[optional\\]/
+  puts "  selrole        =\u3e00 "+ selrole+","
+end
+
+unless "M#SELinux Type#"  =~ /\\[optional\\]/
+  puts "  seltype        =\u3e00 "+ seltype+","
+end
+
+unless "M#SELinux User#"  =~ /\\[optional\\]/
+  puts "  seluser        =\u3e00 "+ seluser+","
+end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias          =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit          =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before         =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check          =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel       =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop           =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify         =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require        =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule       =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage          =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe      =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag            =\u3e00  "+metatag+","
+end
+
+
+puts "}"</attribute>
+        <attribute name="title" type="string">File</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">2</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">3</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT" idrefs="z102"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+    <object type="TAB" id="z130">
+        <attribute name="identifier" type="int16">1</attribute>
+        <attribute name="order" type="int32">3</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="TAB" id="z131">
+        <attribute name="identifier" type="int16">10</attribute>
+        <attribute name="order" type="int32">12</attribute>
+        <relationship name="slots" type="0/0" destination="SLOT"></relationship>
+    </object>
+    <object type="SLOT" id="z132">
+        <attribute name="value" type="string">#Mountscript
+#!/usr/bin/ruby
+def wrapquotes(inputstring)
+  if inputstring =~ /\\$/
+    if inputstring =~ /^\\$([A-Za-z0-9_:]*|\\{[A-Za-z0-9_:]*\\})$/
+      inputstring
+    else
+      "\\"#{inputstring}\\""
+    end
+  else
+    "\\'#{inputstring}\\'"
+  end
+end
+
+mountname     = wrapquotes "M#Name=[Required] Name of mount#"
+mountfstype   = wrapquotes "M#FSType=[Required] The mount type#" 
+mountensure   = wrapquotes "M#Ensure=[optional] Absent, defined, present, mounted, or unmounted#"
+mountatboot   = wrapquotes "M#At Boot=[optional]#"
+mountdevice   = wrapquotes "M#Device=[optional] The device providing the mount#"
+mountdump     = wrapquotes "M#Dump=[optional] 0 or 1#"
+mountoptions  = wrapquotes "M#Options=[optional] Options for the mount as they would appear in fstab#"
+mountpass     = wrapquotes "M#Pass=[optional]#"
+mountremounts = wrapquotes "M#Remounts=[optional]#"
+mounttarget   = wrapquotes "M#Target=[optional]#"
+metaalias     = wrapquotes "M#Meta-alias=[optional metaparameter]#"
+metaaudit     = wrapquotes "M#Meta-audit=[optional metaparameter]#"
+metabefore    = wrapquotes "M#Meta-before=[optional metaparameter]#"
+metacheck     = wrapquotes "M#Meta-check=[optional metaparameter]#"
+metaloglevel  = wrapquotes "M#Meta-loglevel=[optional metaparameter]#"
+metanoop      = wrapquotes "M#Meta-noop=[optional metaparameter]#"
+metanotify    = wrapquotes "M#Meta-notify=[optional metaparameter]#"
+metasubscribe = wrapquotes "M#Meta-subscribe=[optional metaparameter]#"
+metarequire   = wrapquotes "M#Meta-require=[optional metaparameter]#"
+metaschedule  = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
+metastage     = wrapquotes "M#Meta-stage=[optional metaparameter]#"
+metatag       = wrapquotes "M#Meta-tag=[optional metaparameter]#"
+
+unless "M#Name#" == "[Required] Name of mount"
+   puts "mount { "+mountname+":"
+end
+
+case "M#Ensure#"
+  when /^absent$/i
+    puts "  ensure     =\u3e00  'absent',"
+  when /^(present|defined)$/i
+    puts "  ensure     =\u3e00  'present',"
+      when /^mounted$/i
+    puts "  ensure     =\u3e00  'mounted',"
+      when /^unmounted$/i
+    puts "  ensure     =\u3e00  'unmounted',"
+ end
+unless "M#FSType#"=~ /\\[Required\\]/
+  puts "  fstype     =\u3e00  "+mountfstype+","
+end
+unless "M#At Boot#"=~ /\\[optional\\]/
+  puts "  atboot     =\u3e00  "+mountatboot+","
+end
+unless "M#Device#"=~ /\\[optional\\]/
+  puts "  device     =\u3e00  "+mountdevice+","
+end
+case "M#Dump#"
+  when /^0$/i
+    puts "  dump       =\u3e00  '0',"
+  when /^1$/i
+    puts "  dump       =\u3e00  '1',"
+end
+unless "M#Options#" =~ /\\[optional\\]/
+  puts "  options    =\u3e00  "+mountoptions+","
+end
+unless "M#Pass#" =~ /\\[optional\\]/
+  puts "  pass       =\u3e00  "+mountpass+","
+end
+unless "M#Remounts#" =~ /\\[optional\\]/
+  puts "  remounts   =\u3e00  "+mountremounts+","
+end
+unless "M#Target#" =~ /\\[optional\\]/
+  puts "  target     =\u3e00  "+mounttarget+","
+end
+
+unless "M#Meta-alias#" =~ /\\[optional metaparameter\\]/
+  puts "  alias      =\u3e00  "+metaalias+","
+end
+
+unless "M#Meta-audit#" =~ /\\[optional metaparameter\\]/
+  puts "  audit      =\u3e00  "+metaaudit+","
+end
+
+unless "M#Meta-before#" =~ /\\[optional metaparameter\\]/
+  puts "  before     =\u3e00  "+metabefore+","
+end
+
+unless "M#Meta-check#" =~ /\\[optional metaparameter\\]/
+  puts "  check      =\u3e00  "+metacheck+","
+end
+
+unless "M#Meta-loglevel#" =~ /\\[optional metaparameter\\]/
+  puts "  loglevel   =\u3e00  "+metaloglevel+","
+end
+
+unless "M#Meta-noop#" =~ /\\[optional metaparameter\\]/
+  puts "  noop       =\u3e00  "+metanoop+","
+end
+
+unless "M#Meta-notify#" =~ /\\[optional metaparameter\\]/
+  puts "  notify     =\u3e00  "+metanotify+","
+end
+
+unless "M#Meta-require#" =~ /\\[optional metaparameter\\]/
+  puts "  require    =\u3e00  "+metarequire+","
+end
+
+unless "M#Meta-schedule#" =~ /\\[optional metaparameter\\]/
+  puts "  schedule   =\u3e00  "+metaschedule+","
+end
+
+unless "M#Meta-stage#" =~ /\\[optional metaparameter\\]/
+  puts "  stage      =\u3e00  "+metastage+","
+end
+
+unless "M#Meta-subscribe#" =~ /\\[optional metaparameter\\]/
+  puts "  subscribe  =\u3e00  "+metasubscribe+","
+end
+
+unless "M#Meta-tag#" =~ /\\[optional metaparameter\\]/
+  puts "  tag        =\u3e00  "+metatag+","
+end
+
+puts "}"</attribute>
+        <attribute name="title" type="string">Mount</attribute>
+        <attribute name="runinbackground" type="bool">0</attribute>
+        <attribute name="resulttoclipboard" type="bool">1</attribute>
+        <attribute name="resulttocaller" type="bool">1</attribute>
+        <attribute name="reprocess" type="bool">0</attribute>
+        <attribute name="identifier" type="int16">5</attribute>
+        <attribute name="execute" type="int16">0</attribute>
+        <attribute name="alertresult" type="bool">0</attribute>
+        <attribute name="alerterrors" type="bool">1</attribute>
+        <attribute name="order" type="int32">6</attribute>
+        <relationship name="label" type="1/1" destination="LABEL" idrefs="z115"></relationship>
+        <relationship name="script" type="1/1" destination="SCRIPT" idrefs="z102"></relationship>
+        <relationship name="tab" type="1/1" destination="TAB" idrefs="z122"></relationship>
+    </object>
+</database>

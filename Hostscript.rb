@@ -1,3 +1,4 @@
+#Hostscript
 #!/usr/bin/ruby
 def wrapquotes(inputstring)
   if inputstring =~ /\$/
