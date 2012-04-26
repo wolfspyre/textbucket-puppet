@@ -24,8 +24,8 @@ usermanagehome  = wrapquotes "M#Manage Home=[optional] True or false#"
 usershell       = wrapquotes "M#Shell=[optional] The user's login shell#"
 usersystem      = wrapquotes "M#System Account=[optional] True or false#"
 userpassword    = wrapquotes "M#Password=[optional]#"
-userpassmaxage  = wrapquotes "M#Password Max Age=[optional]#"
-userpassminage  = wrapquotes "M#Password Min Age=[optional]#"
+userpassmaxage  = wrapquotes "M#Pass Max age=[optional]#"
+userpassminage  = wrapquotes "M#Pass Min age=[optional]#"
 userexpiry      = wrapquotes "M#Expiry=[optional] The user's expiry date in YYYY-MM-DD format#"
 userallowdupe   = wrapquotes "M#Allow Duplicates=[optional] True or false#"
 userattrmemb    = wrapquotes "M#Attr Membership=[optional] Inclusive or minimum#"
@@ -56,7 +56,7 @@ metaschedule    = wrapquotes "M#Meta-schedule=[optional metaparameter]#"
 metastage       = wrapquotes "M#Meta-stage=[optional metaparameter]#"
 metatag         = wrapquotes "M#Meta-tag=[optional metaparameter]#"
 
-unless "M#Username" =~ /\[Required\]/
+unless "M#Username#" =~ /\[Required\]/
    puts "user { "+username+":"
 end
 case "M#Ensure#"
@@ -100,10 +100,10 @@ end
 unless "M#Password#" =~ /\[optional\]/
   puts "  password        => "+userpassword+","
 end
-unless "M#Password Max Age#" =~ /\[optional\]/
+unless "M#Pass Max age#" =~ /\[optional\]/
   puts "  password_max_age  => "+userpassmaxage+","
 end
-unless "M#Password Min Age#" =~ /\[optional\]/
+unless "M#Pass Min age#" =~ /\[optional\]/
   puts "  password_min_age  => "+userpassminage+","
 end
 if "M#Expiry#" =~ /\d\d\d\d-\d\d-\d\d/
